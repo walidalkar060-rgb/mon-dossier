@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Dossier Web - UT Capitole</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f2f2f7;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  .container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #f2f2f7;
+    min-height: 100vh;
+  }
+
+  /* ===== EN-TÊTE BLEU (NOM) ===== */
+  .header {
+    background-color: #6B7AB8;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    position: relative;
+  }
+
+  .header .info-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background: white;
+    color: #6B7AB8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: Georgia, serif;
+  }
+
+  /* ===== CARTES D'INFORMATIONS ===== */
+  .card {
+    background: white;
+    margin: 12px 0 0 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .card-row {
+    padding: 14px 20px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 16px;
+  }
+
+  .card-row:last-child {
+    border-bottom: none;
+  }
+
+  .email-link {
+    color: #2a5db0;
+    text-decoration: underline;
+    font-size: 15px;
+  }
+
+  .student-name {
+    font-weight: 500;
+    color: #1a1a1a;
+    font-size: 16px;
+  }
+
+  .student-id {
+    color: #555;
+    font-size: 15px;
+    margin-top: 4px;
+  }
+
+  /* ===== SECTION TITRE (BANDEAU BLEU) ===== */
+  .section-title {
+    background-color: #6B7AB8;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 16px;
+  }
+
+  /* ===== CONTENU SECTION ===== */
+  .section-content {
+    background: white;
+    padding: 22px 20px;
+    text-align: center;
+    color: #3a4a8c;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  /* ===== TABLEAU DIPLÔMES / FILIÈRES ===== */
+  .table-section {
+    background: white;
+  }
+
+  .year-row {
+    background: #f8f8f8;
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    color: #2a2a2a;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  .data-row {
+    display: flex;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .data-label {
+    flex: 1;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .data-label.link {
+    color: #2a8fd6;
+  }
+
+  .data-value {
+    flex: 1;
+    color: #555;
+    font-size: 15px;
+    text-align: left;
+  }
+
+  /* ===== LIGNE FILIÈRE AVEC SESSIONS ===== */
+  .filiere-row {
+    display: flex;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 16px;
+  }
+
+  .filiere-name {
+    flex: 0 0 100px;
+    color: #2a8fd6;
+    font-weight: 500;
+    font-size: 15px;
+    padding-top: 4px;
+  }
+
+  .sessions {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+  }
+
+  .session {
+    flex: 1;
+  }
+
+  .session-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+  }
+
+  .session-grade {
+    font-size: 15px;
+    color: #1a1a1a;
+  }
+
+  .session-status {
+    font-size: 14px;
+    color: #555;
+    margin-top: 2px;
+  }
+
+  .rang-row {
+    padding: 8px 20px 14px 20px;
+    text-align: right;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .rang-label {
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  .rang-value {
+    color: #1a1a1a;
+    margin-left: 8px;
+  }
+
+  /* ===== BARRE D'ONGLETS BAS ===== */
+  .tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 500px;
+    margin: 0 auto;
+    background: #f8f8f8;
+    border-top: 1px solid #d0d0d0;
+    display: flex;
+    z-index: 100;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 14px;
+    text-align: center;
+    font-size: 15px;
+    color: #888;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-bottom: 3px solid transparent;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    font-family: inherit;
+  }
+
+  .tab.active {
+    color: #2a5db0;
+    font-weight: 600;
+    border-bottom: 3px solid #2a5db0;
+  }
+
+  .tab-icon {
+    font-style: italic;
+    font-family: Georgia, serif;
+    font-weight: bold;
+  }
+
+  /* ===== VUES (ONGLETS) ===== */
+  .view {
+    display: none;
+  }
+
+  .view.active {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============================================ -->
+  <!-- VUE 1 : INFORMATIONS                          -->
+  <!-- ============================================ -->
+  <div id="view-informations" class="view active">
+
+    <!-- En-tête avec le nom de l'étudiant -->
+    <div class="header">WALID AL KARMUDI</div>
+
+    <!-- Carte avec email + nom + numéro étudiant -->
+    <div class="card">
+      <div class="card-row">
+        <a href="mailto:walid.al-karmudi@ut-capitole.fr" class="email-link">
+          walid.al-karmudi@ut-capitole.fr
+        </a>
+      </div>
+      <div class="card-row">
+        <div class="student-name">WALID AL KARMUDI</div>
+        <div class="student-id">22405630</div>
+      </div>
+    </div>
+
+    <!-- Section Année universitaire -->
+    <div class="section-title">Année universitaire 2026/2027</div>
+    <div class="section-content">
+      Aucune inscription pour cette année universitaire
+    </div>
+
+  </div>
+
+  <!-- ============================================ -->
+  <!-- VUE 2 : RÉSULTATS                             -->
+  <!-- ============================================ -->
+  <div id="view-resultats" class="view">
+
+    <!-- En-tête avec le nom de l'étudiant + icône info -->
+    <div class="header">
+      WALID AL KARMUDI
+      <span class="info-icon">i</span>
+    </div>
+
+    <!-- ===== SECTION DIPLÔMES ===== -->
+    <div class="section-title">DIPLÔMES</div>
+    <div class="table-section">
+
+      <!-- Ligne 1 -->
+      <div class="year-row">2025/2026</div>
+      <div class="data-row">
+        <div class="data-label">Département des Activités Physiques et Sportives</div>
+        <div class="data-value">Aucun résultat</div>
+      </div>
+
+      <!-- Ligne 2 -->
+      <div class="year-row">2025/2026</div>
+      <div class="data-row">
+        <div class="data-label">DEUG AES</div>
+        <div class="data-value">Aucun résultat</div>
+      </div>
+
+      <!-- Ligne 3 -->
+      <div class="year-row">2024/2025</div>
+      <div class="data-row">
+        <div class="data-label">DEUG AES</div>
+        <div class="data-value">Aucun résultat</div>
+      </div>
+
+    </div>
+
+    <!-- ===== SECTION FILIÈRES ===== -->
+    <div class="section-title">FILIÈRES</div>
+    <div class="table-section">
+
+      <!-- Filière 2025/2026 - L1 AES -->
+      <div class="year-row">2025/2026</div>
+      <div class="filiere-row">
+        <div class="filiere-name">L1 AES</div>
+        <div class="sessions">
+          <div class="session">
+            <div class="session-title">Session 1</div>
+            <div class="session-grade">7.9</div>
+            <div class="session-status">AJ</div>
+          </div>
+        </div>
+      </div>
+      <div class="rang-row">
+        <span class="rang-label">Rang</span>
+        <span class="rang-value">634/718</span>
+      </div>
+
+      <!-- Filière 2025/2026 - Sport -->
+      <div class="year-row">2025/2026</div>
+      <div class="data-row">
+        <div class="data-label link">Département des Activités Physiques et Sportives UT1</div>
+        <div class="data-value">Aucun résultat</div>
+      </div>
+
+      <!-- Filière 2025/2026 - L1 AES avec 2 sessions -->
+      <div class="year-row">2025/2026</div>
+      <div class="filiere-row">
+        <div class="filiere-name">L1 AES</div>
+        <div class="sessions">
+          <div class="session">
+            <div class="session-title">Session 1</div>
+            <div class="session-grade">7.9</div>
+            <div class="session-status">AJ</div>
+          </div>
+          <div class="session">
+            <div class="session-title">Session 2</div>
+            <div class="session-grade">8.33</div>
+            <div class="session-status">AJ</div>
+          </div>
+        </div>
+      </div>
+      <div class="rang-row">
+        <span class="rang-label">Rang</span>
+        <span class="rang-value">190/387</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ============================================ -->
+<!-- BARRE D'ONGLETS FIXE EN BAS                   -->
+<!-- ============================================ -->
+<div class="tab-bar">
+  <button class="tab active" onclick="showView('informations', this)">
+    <span class="tab-icon">i</span> Informations
+  </button>
+  <button class="tab" onclick="showView('resultats', this)">
+    <span>☰</span> Résultats
+  </button>
+</div>
+
+<script>
+  function showView(viewName, tabElement) {
+    // Cacher toutes les vues
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    // Afficher la vue sélectionnée
+    document.getElementById('view-' + viewName).classList.add('active');
+    // Mettre à jour les onglets
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tabElement.classList.add('active');
+    // Remonter en haut
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>
